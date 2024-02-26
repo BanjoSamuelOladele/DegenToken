@@ -3,16 +3,16 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Degen is ERC20, Ownable {
+contract DegenWizz is ERC20, Ownable {
 
-    enum RewardItems { 
+    enum RewardItems {  
         PHOENIX, 
         TIMEMACHINE, 
         INVISIBLECLOAK,
         MAGMAWAND
     }
 
-    constructor() ERC20("Degen", "DWN") Ownable(msg.sender) {}
+    constructor() ERC20("DegenWiz", "DWN") Ownable(msg.sender) {}
 
 
     function calculateDecimals() private view returns(uint){
@@ -31,7 +31,7 @@ contract Degen is ERC20, Ownable {
 
     function transferDegenToken(address _to, uint256 _amount) external returns(bool){
 
-        require((_amount * calculateDecimals()) <= balanceOf(msg.sender), "Insufficient DegenWiz Token");
+        require((_amount * calculateDecimals()) <= balanceOf(msg.sender), "Insufficient Degen Token");
 
         bool isSent = transfer(_to, (_amount * calculateDecimals()));
 
@@ -39,7 +39,7 @@ contract Degen is ERC20, Ownable {
     }
 
     function burnDegenToken(uint256 _amount) external {
-        require((_amount * calculateDecimals()) <= balanceOf(msg.sender), "Insufficient DegenWiz Token");
+        require((_amount * calculateDecimals()) <= balanceOf(msg.sender), "Insufficient Degen Token");
         
         _burn(msg.sender, (_amount * calculateDecimals()));
     }
@@ -50,7 +50,7 @@ contract Degen is ERC20, Ownable {
 
     function gainRewardItems(RewardItems item) external {
         uint256 price = getPrice(item);
-        require(price <= balanceOf(msg.sender), "Insufficient DegenWiz Token");
+        require(price <= balanceOf(msg.sender), "Insufficient Degen Token");
 
         _transfer(msg.sender, address(this), price);
     }
@@ -74,4 +74,3 @@ contract Degen is ERC20, Ownable {
     }
 
 }
-
